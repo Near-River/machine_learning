@@ -17,8 +17,8 @@ def plot_data(dataset, W):
 
     plt.figure()
     # Plot the points
-    plt.plot(X_pos[:, 0], X_pos[:, 1], '*')
-    plt.plot(X_neg[:, 0], X_neg[:, 1], 'o')
+    plt.plot(X_pos[:, 0], X_pos[:, 1], 'o')
+    plt.plot(X_neg[:, 0], X_neg[:, 1], 'x')
     # Plot the dividing line
     X = np.linspace(0, 1, 1000)
     slope = -1 * W[0] / W[1]
@@ -47,7 +47,6 @@ def pla_learning(dataset):
         count = 0
         for i in range(rows):
             if sigmod(W.dot(X[i].transpose())) == Y[i]:
-                print('enter', count)
                 count += 1
         if count == rows:
             break
