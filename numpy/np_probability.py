@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # coding=utf-8
 
-import numpy as np
-from collections import Counter
-
 """
 Numpy and Probability
+This module provides functions to draw weighted samples from a population
 """
+import random
+import numpy as np
 
 
 def find_interval(x, partition, endpoints=True):
@@ -36,40 +36,64 @@ def weighted_choice(sequence, weights):
     return sequence[index]
 
 
-def process_datafile(filename):
-    """ process_datafile -> (universities,
-                             enrollments,
-                             total_number_of_students)
-        universities: list of University names
-        enrollments: corresponding list with enrollments
-        total_number_of_students: over all universities
+def cartesian_choice(*iterables):
     """
-    universities = []
-    enrollments = []
-    with open(filename) as fh:
-        total_number_of_students = 0
-        fh.readline()  # get rid of descriptive first line
-        for line in fh:
-            line = line.strip()
-            *praefix, undergraduates, postgraduates, total = line.rsplit()
-            university = praefix[1:]
-            total = int(total.replace(",", ""))
-            enrollments.append(total)
-            universities.append(" ".join(university))
-            total_number_of_students += total
-    return universities, enrollments, total_number_of_students
+    A list with random choices from each iterable of iterables
+    is being created in respective order.
+
+    The result list can be seen as an element of the
+    Cartesian product of the iterables
+    """
+    res = []
+    for population in iterables:
+        res.append(random.choice(population))
+    return res
 
 
-if __name__ == '__main__':
-    universities, enrollments, total_students = process_datafile("universities_uk.txt")
-    # for i in range(10):
-    #     print(universities[i], enrollments[i])
-    print("Total number of students onrolled in the UK: ", total_students)
+def weighted_cartesian_choice(*iterables):
+    """
+    A list with weighted random choices from each iterable of iterables
+    is being created in respective order
+    """
+    res = []
+    for population, weights in iterables:
+        lst = weighted_choice(population, weights)
+        res.append(lst)
+    return res
 
-    # "enroll" 100,000 fictional students.
-    normalized_enrollments = [students / total_students for students in enrollments]
-    outcomes = []
-    for i in range(100000):
-        outcomes.append(weighted_choice(universities, normalized_enrollments))
-    c = Counter(outcomes)
-    print(c.most_common(10))
+
+def weighted_sample(population, weights, k):
+    """
+    This function draws a random sample of length k
+    from the sequence 'population' according to the
+    list of weights
+    """
+    sample = set()
+    population = list(population)
+    weights = list(weights)
+    while len(sample) < k:
+        choice = weighted_choice(population, weights)
+        sample.add(choice)
+        index = population.index(choice)
+        weights.pop(index)
+        population.remove(choice)
+        weights = [x / sum(weights) for x in weights]
+    return list(sample)
+
+
+def weighted_sample_alternative(population, weights, k):
+    """
+    Alternative way to previous implementation.
+
+    This function draws a random sample of length k
+    from the sequence 'population' according to the
+    list of weights
+    """
+    sample = set()
+    population = list(population)
+    weights = list(weights)
+    while len(sample) < k:
+        choice = weighted_choice(population, weights)
+        if choice not in sample:
+            sample.add(choice)
+    return list(sample)
