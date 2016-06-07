@@ -12,7 +12,7 @@ import numpy as np
 def find_interval(x, partition, endpoints=True):
     """ find_interval -> i
         If endpoints is True, "i" will be the index for which applies
-        partition[i] < x < partition[i+1], if such an index exists.
+        partition[i] <= x < partition[i+1], if such an index exists.
         -1 otherwise
 
         If endpoints is False, "i" will be the smallest index
