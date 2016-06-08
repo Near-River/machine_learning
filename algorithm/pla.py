@@ -39,14 +39,14 @@ def pla_learning(dataset):
     while True:
         is_changed = False
         i = int(random() * rows)
-        if sigmod(W.dot(X[i].transpose())) != Y[i]:
+        if sign(W.dot(X[i].transpose())) != Y[i]:
             W += Y[i] * X[i]
             is_changed = True
         if not is_changed:
             continue
         count = 0
         for i in range(rows):
-            if sigmod(W.dot(X[i].transpose())) == Y[i]:
+            if sign(W.dot(X[i].transpose())) == Y[i]:
                 count += 1
         if count == rows:
             break

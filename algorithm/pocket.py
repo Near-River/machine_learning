@@ -24,7 +24,7 @@ def pocket_learning(dataset, loop=1000):
         _W = W.copy()
         is_changed = False
         i = int(random() * rows)
-        if sigmod(W.dot(X[i].transpose())) != Y[i]:
+        if sign(W.dot(X[i].transpose())) != Y[i]:
             _W += Y[i] * X[i]
             is_changed = True
         if not is_changed:
@@ -34,9 +34,9 @@ def pocket_learning(dataset, loop=1000):
         """
         errs_count, new_errs_count = 0, 0
         for j in range(rows):
-            if sigmod(W.dot(X[j].transpose())) != Y[j]:
+            if sign(W.dot(X[j].transpose())) != Y[j]:
                 errs_count += 1
-            if sigmod(_W.dot(X[j].transpose())) != Y[j]:
+            if sign(_W.dot(X[j].transpose())) != Y[j]:
                 new_errs_count += 1
         if new_errs_count < errs_count:
             W = _W.copy()
