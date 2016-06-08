@@ -12,7 +12,7 @@ Linear Regression Algorithm
 
 def plot_data(dataset, W_Lin):
     X = dataset[:, 0:-1]
-    Y = np.array(dataset[:, -1], dtype=int)
+    Y = dataset[:, -1]
 
     plt.figure()
     # Plot the points
