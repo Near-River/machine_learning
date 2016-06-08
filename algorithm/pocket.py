@@ -9,7 +9,7 @@ Pocket Algorithm
 """
 
 
-def sigmod(a, threshold=0):
+def sign(a, threshold=0):
     return 1 if a - threshold > 0 else -1
 
 
