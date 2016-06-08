@@ -29,7 +29,6 @@ def linear_regression_learning(dataset):
     rows, cols = X.shape
     X = np.hstack((np.ones((rows, 1)), X))
     Y = dataset[:, -1]
-    W = np.zeros((1, cols))[0]
 
     X, Y = np.mat(X), np.mat(Y).transpose()
     W = lg.inv(X.transpose() * X) * X.transpose() * Y
