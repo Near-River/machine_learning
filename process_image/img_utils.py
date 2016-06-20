@@ -5,7 +5,7 @@ import matplotlib.image as mpimg
 def tint(imag, percent):
     """
     imag: the image which will be whitened
-    percent: a value between 0 (image will remain unchanged
+    percent: a value between 0 (image will remain unchanged)
              and 1 (image will completely white)
     """
     tinted_imag = imag + (np.ones(imag.shape) - imag) * percent
