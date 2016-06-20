@@ -3,7 +3,7 @@
 from sklearn.cluster import KMeans
 from sklearn.externals import joblib
 import numpy as np
-import pandas as pd
+import pandas_learning as pd
 import matplotlib.pyplot as plt
 from pylab import *
 
